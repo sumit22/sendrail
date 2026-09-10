@@ -1,0 +1,163 @@
+{
+  "name": "sendrail",
+  "version": "0.1.0",
+  "description": "Email deliverability on your own SES account \u2014 sending, delivery feedback, suppression and reputation. The layer you would otherwise rent from an ESP.",
+  "license": "MIT",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumit22/sendrail.git"
+  },
+  "homepage": "https://github.com/sumit22/sendrail#readme",
+  "bugs": {
+    "url": "https://github.com/sumit22/sendrail/issues"
+  },
+  "keywords": [
+    "aws-ses",
+    "bounce",
+    "deliverability",
+    "email",
+    "email-deliverability",
+    "reputation",
+    "ses",
+    "smtp",
+    "suppression",
+    "transactional-email"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./ses": {
+      "import": {
+        "types": "./dist/ses.d.mts",
+        "default": "./dist/ses.mjs"
+      },
+      "require": {
+        "types": "./dist/ses.d.ts",
+        "default": "./dist/ses.js"
+      }
+    },
+    "./nest": {
+      "import": {
+        "types": "./dist/nest.d.mts",
+        "default": "./dist/nest.mjs"
+      },
+      "require": {
+        "types": "./dist/nest.d.ts",
+        "default": "./dist/nest.js"
+      }
+    },
+    "./express": {
+      "import": {
+        "types": "./dist/express.d.mts",
+        "default": "./dist/express.mjs"
+      },
+      "require": {
+        "types": "./dist/express.d.ts",
+        "default": "./dist/express.js"
+      }
+    },
+    "./testing": {
+      "import": {
+        "types": "./dist/testing.d.mts",
+        "default": "./dist/testing.mjs"
+      },
+      "require": {
+        "types": "./dist/testing.d.ts",
+        "default": "./dist/testing.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "ses",
+    "nest",
+    "express",
+    "testing",
+    "docs/schema.sql",
+    "docs/aws-setup.md",
+    "docs/ai-prompts.md",
+    "AGENTS.md",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "test:fast": "vitest run",
+    "test:watch": "vitest",
+    "attw": "attw --pack .",
+    "check:install": "node scripts/check-install.mjs"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "dependencies": {
+    "html-to-text": "^9.0.5",
+    "nodemailer": "^8.0.1"
+  },
+  "peerDependencies": {
+    "@aws-sdk/client-ses": "^3.0.0",
+    "@aws-sdk/client-sesv2": "^3.0.0",
+    "@nestjs/common": "^10.0.0 || ^11.0.0",
+    "express": "^4.18.0 || ^5.0.0",
+    "vitest": "^2.0.0 || ^3.0.0 || ^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@aws-sdk/client-ses": {
+      "optional": true
+    },
+    "@aws-sdk/client-sesv2": {
+      "optional": true
+    },
+    "@nestjs/common": {
+      "optional": true
+    },
+    "express": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@aws-sdk/client-ses": "^3.985.0",
+    "@aws-sdk/client-sesv2": "^3.985.0",
+    "@nestjs/common": "^10.3.0",
+    "@nestjs/core": "^10.3.0",
+    "@nestjs/platform-express": "^10.3.0",
+    "@nestjs/testing": "^10.3.0",
+    "@types/express": "^5.0.0",
+    "@types/html-to-text": "^9.0.4",
+    "@types/node": "^22.0.0",
+    "@types/nodemailer": "^7.0.9",
+    "@types/supertest": "^6.0.2",
+    "@vitest/coverage-v8": "^4.0.18",
+    "express": "^5.1.0",
+    "reflect-metadata": "^0.2.1",
+    "rxjs": "^7.8.1",
+    "supertest": "^7.0.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.18"
+  }
+}

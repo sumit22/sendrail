@@ -1,0 +1,7 @@
+{
+  "name": "sendrail-testing-shim",
+  "private": true,
+  "main": "../dist/testing.js",
+  "module": "../dist/testing.mjs",
+  "types": "../dist/testing.d.ts"
+}

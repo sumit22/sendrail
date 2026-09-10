@@ -1,0 +1,22 @@
+{
+  "name": "sendrail-example-nestjs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.3.0",
+    "@nestjs/core": "^10.3.0",
+    "@nestjs/platform-express": "^10.3.0",
+    "reflect-metadata": "^0.2.1",
+    "rxjs": "^7.8.1",
+    "sendrail": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.3.3"
+  }
+}

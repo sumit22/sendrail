@@ -1,0 +1,7 @@
+{
+  "name": "sendrail-nest-shim",
+  "private": true,
+  "main": "../dist/nest.js",
+  "module": "../dist/nest.mjs",
+  "types": "../dist/nest.d.ts"
+}

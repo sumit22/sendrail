@@ -1,0 +1,7 @@
+{
+  "name": "sendrail-ses-shim",
+  "private": true,
+  "main": "../dist/ses.js",
+  "module": "../dist/ses.mjs",
+  "types": "../dist/ses.d.ts"
+}

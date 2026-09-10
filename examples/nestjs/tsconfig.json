@@ -1,0 +1,24 @@
+{
+  // Deliberately the stock NestJS compiler settings: "module": "commonjs" with
+  // no "moduleResolution", which means TypeScript uses the legacy node10
+  // algorithm and ignores the `exports` map entirely.
+  //
+  // That is the configuration most NestJS projects actually have, and without
+  // the node10 shim directories at the package root, `import ... from
+  // 'sendrail/nest'` fails here with "Cannot find module" despite a perfectly
+  // correct exports map. Keeping this example on the legacy setting makes CI a
+  // regression test for that.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"]
+}

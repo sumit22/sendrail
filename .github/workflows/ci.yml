@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      # The package must carry no trace of the private application it was
+      # extracted from. `-w` matches whole words only — without it "stylistic"
+      # matches "stylist" and the check cries wolf.
+      - name: Assert no business coupling
+        run: |
+          DOCS="README.md CHANGELOG.md AGENTS.md docs/aws-setup.md docs/ai-prompts.md docs/schema.sql examples/"
+
+          # src/ additionally assumes no ORM at all, so naming one there is a
+          # design regression rather than a leak. The docs may name ORMs freely
+          # — they warn about Prisma's find-then-write upsert by name.
+          if grep -rniwE "salon|salons|appointment|appointments|booking|bookings|stylist|stylists|customer|customers|prisma|sequelize|typeorm|mongoose" src/; then
+            echo "::error::src/ must not reference business concepts or any ORM"
+            exit 1
+          fi
+
+          if grep -rniwE "salon|salons|appointment|appointments|booking|bookings|stylist|stylists" $DOCS; then
+            echo "::error::Business vocabulary found in documentation"
+            exit 1
+          fi
+
+          # No imports from a private scope. src/ may only depend on the two
+          # runtime dependencies and the optional peers; src/architecture.spec.ts
+          # enforces the exact allowlist for the core entry point.
+          if grep -rnoE "from '@[a-z0-9-]+/" src/ | grep -vE "@aws-sdk/|@nestjs/"; then
+            echo "::error::Unexpected scoped import in src/"
+            exit 1
+          fi
+
+      - name: Build
+        run: pnpm build
+
+      # A dual ESM/CJS package with subpath exports gets the `types` condition
+      # wrong easily, and neither a green build nor `npm publish --dry-run`
+      # catches it — only a real install does.
+      - name: Are the types wrong?
+        run: pnpm attw
+
+      # Proves the optional-peer split is genuine: core loads with no peers at
+      # all, and sendrail/nest loads with NestJS present but the AWS SDK absent.
+      - name: Install smoke test
+        run: pnpm check:install
+
+      # The NestJS example deliberately uses legacy node10 module resolution,
+      # so this also regression-tests the subpath shim directories.
+      - name: Build examples
+        run: pnpm -r --filter './examples/*' build

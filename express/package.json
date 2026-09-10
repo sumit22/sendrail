@@ -1,0 +1,7 @@
+{
+  "name": "sendrail-express-shim",
+  "private": true,
+  "main": "../dist/express.js",
+  "module": "../dist/express.mjs",
+  "types": "../dist/express.d.ts"
+}
